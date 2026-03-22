@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Tienda Estf</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	<div class="bg-noise"></div>
+	<div class="floating-shape"></div>
+
+	<button class="cart-toggle" id="cartToggle" aria-label="Abrir carrito">
+		<span class="icon">🛒</span>
+		<span class="badge" id="cartBadge">0</span>
+	</button>
+
+	<header class="hero" id="hero">
+		<div class="hero-top">
+			<div class="brand">
+				<div class="brand-mark">TE</div>
+				<div>
+					<p class="brand-kicker">Tienda Estf</p>
+					<p class="brand-tag">Vitrina lista para vender</p>
+				</div>
+			</div>
+			<div class="hero-actions" id="sessionActions">
+				<button class="ghost" id="registerBtn">Crear cuenta</button>
+				<button class="primary" id="loginBtn">Iniciar sesion</button>
+				<button class="ghost hidden" id="adminPanelBtn">Panel admin</button>
+			</div>
+		</div>
+		<div class="hero-body">
+			<div class="hero-text">
+				<p class="pill">Nuevo inventario listo</p>
+				<h1>Ensenia productos con imagen y precio desde el primer vistazo</h1>
+				<p class="lede">Diseñado para que el usuario vea imagen, nombre y costo al instante, y al desplazarse se revela todo el catalogo con una transicion suave.</p>
+				<div class="hero-cta">
+					<a href="#productos" class="primary">Ver productos</a>
+					<button class="ghost" id="ctaLogin">Entrar para comprar</button>
+				</div>
+			</div>
+			<div class="hero-visual">
+				<div class="card-hero">
+					<div class="card-hero-media" aria-hidden="true">Imagen hero</div>
+					<div class="card-hero-text">
+						<div class="line"></div>
+						<div class="line short"></div>
+						<div class="price-tag">$0.00</div>
+					</div>
+				</div>
+				<p class="helper">Deja tus imagenes en la carpeta assets/ y renombra en el panel admin.</p>
+			</div>
+		</div>
+	</header>
+
+	<main>
+		<section class="products" id="productos">
+			<div class="section-head">
+				<div>
+					<p class="pill">Catalogo</p>
+					<h2>Productos disponibles</h2>
+					<p class="lede">Imagen, nombre y costo en cards. Click para ver detalle y agregar al carrito.</p>
+				</div>
+				<div class="section-actions">
+					<button class="ghost" id="filterAvailable">Solo disponibles</button>
+					<button class="ghost" id="resetFilter">Ver todos</button>
+				</div>
+			</div>
+			<div class="product-grid" id="productGrid"></div>
+		</section>
+	</main>
+
+	<aside class="cart-panel" id="cartPanel" aria-label="Carrito">
+		<div class="cart-header">
+			<div>
+				<p class="pill">Carrito</p>
+				<h3>Articulos elegidos</h3>
+			</div>
+			<button class="icon-btn" id="closeCart" aria-label="Cerrar carrito">✕</button>
+		</div>
+		<div class="cart-items" id="cartItems"></div>
+		<div class="cart-footer">
+			<div class="total">
+				<span>Total</span>
+				<strong id="cartTotal">$0.00</strong>
+			</div>
+			<button class="primary full" id="checkoutBtn">Confirmar compra</button>
+		</div>
+	</aside>
+
+	<div class="overlay" id="modalOverlay">
+		<div class="modal" id="productModal">
+			<button class="icon-btn close" id="closeProductModal">✕</button>
+			<div class="modal-body" id="productModalBody"></div>
+		</div>
+	</div>
+
+	<div class="overlay" id="authOverlay">
+		<div class="modal auth">
+			<button class="icon-btn close" id="closeAuth">✕</button>
+			<div class="auth-tabs">
+				<button class="tab active" data-tab="login">Iniciar sesion</button>
+				<button class="tab" data-tab="register">Crear usuario</button>
+			</div>
+			<div class="auth-panels">
+				<form id="loginForm" class="auth-form" data-tab="login">
+					<label>Email
+						<input type="email" name="email" required placeholder="admin@tienda.com">
+					</label>
+					<label>Contrasena
+						<input type="password" name="password" required placeholder="********">
+					</label>
+					<button type="submit" class="primary full">Entrar</button>
+				</form>
+				<form id="registerForm" class="auth-form hidden" data-tab="register">
+					<label>Nombre
+						<input type="text" name="name" required placeholder="Nombre completo">
+					</label>
+					<label>Email
+						<input type="email" name="email" required placeholder="usuario@correo.com">
+					</label>
+					<label>Contrasena
+						<input type="password" name="password" required placeholder="Min 6 caracteres">
+					</label>
+					<button type="submit" class="primary full">Crear cuenta</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div class="overlay" id="adminOverlay">
+		<div class="modal admin">
+			<button class="icon-btn close" id="closeAdmin">✕</button>
+			<div class="admin-head">
+				<div>
+					<p class="pill">Panel admin</p>
+					<h3>Gestiona productos</h3>
+				</div>
+				<p class="helper">Edita precios, imagenes (coloca las rutas en assets/), marca agotados o elimina.</p>
+			</div>
+			<form id="productForm" class="admin-form">
+				<input type="hidden" name="id">
+				<div class="grid-2">
+					<label>Nombre
+						<input type="text" name="name" required placeholder="Ej. Camisa oversize">
+					</label>
+					<label>Precio
+						<input type="number" name="price" step="0.01" min="0" required placeholder="59.99">
+					</label>
+				</div>
+				<label>URL de imagen (deja espacio para renombrar en assets/)
+					<input type="text" name="image" required placeholder="assets/producto1.jpg">
+				</label>
+				<label>Descripcion
+					<textarea name="description" rows="2" placeholder="Detalles breves"></textarea>
+				</label>
+				<button type="submit" class="primary full" id="saveProductBtn">Guardar producto</button>
+			</form>
+
+			<div class="admin-list" id="adminProductList"></div>
+		</div>
+	</div>
+
+	<div class="overlay" id="checkoutOverlay">
+		<div class="modal checkout">
+			<button class="icon-btn close" id="closeCheckout">✕</button>
+			<p class="pill">Confirma tu compra</p>
+			<h3>Datos del comprador</h3>
+			<form id="checkoutForm" class="auth-form">
+				<label>Nombre completo
+					<input type="text" name="buyer" required placeholder="Nombre y apellido">
+				</label>
+				<label>Email
+					<input type="email" name="buyerEmail" required placeholder="correo@ejemplo.com">
+				</label>
+				<label>Direccion de envio
+					<input type="text" name="address" required placeholder="Calle, numero, ciudad">
+				</label>
+				<button type="submit" class="primary full">Confirmar pedido</button>
+			</form>
+		</div>
+	</div>
+
+	<script src="script.js"></script>
+</body>
+</html>
